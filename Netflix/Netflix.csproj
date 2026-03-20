@@ -1,13 +1,20 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
     <PropertyGroup>
-        <TargetFramework>net10.0</TargetFramework>
+        <TargetFramework>net9.0</TargetFramework>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.5"/>
+        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Netflix.BLL\Netflix.BLL.csproj" />
+      <ProjectReference Include="..\Netflix.DAL\Netflix.DAL.csproj" />
+      <ProjectReference Include="..\Netflix.Domain\Netflix.Domain.csproj" />
+      <ProjectReference Include="..\Netflix.Presentation\Netflix.Presentation.csproj" />
     </ItemGroup>
 
 </Project>
