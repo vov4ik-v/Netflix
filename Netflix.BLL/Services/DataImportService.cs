@@ -40,10 +40,11 @@ public class DataImportService : IDataImportService
     {
         var rows = await _csvDataReader.ReadAllRowsAsync(filePath);
 
-        var genres = new Dictionary<string, Genre>();
-        var users = new Dictionary<string, User>();
-        var contents = new Dictionary<string, Content>();
-        var myLists = new Dictionary<int, MyList>();
+        var genreNames = new HashSet<string>();
+        var contentGenreMap = new Dictionary<string, string>();
+        var contentList = new List<Content>();
+        var episodeData = new List<(string SeriesTitle, Episode Episode)>();
+        var userData = new Dictionary<string, User>();
 
         foreach (var row in rows)
         {
@@ -55,51 +56,108 @@ public class DataImportService : IDataImportService
             switch (recordType)
             {
                 case "Genre":
-                    ProcessGenre(row, genres);
+                    genreNames.Add(row[1].Trim());
                     break;
                 case "Movie":
-                    ProcessMovie(row, genres, contents);
+                {
+                    var genreName = row[1].Trim();
+                    var title = row[2].Trim();
+                    if (contentGenreMap.ContainsKey(title)) break;
+                    genreNames.Add(genreName);
+                    contentGenreMap[title] = genreName;
+                    contentList.Add(new Movie
+                    {
+                        Title = title,
+                        Description = row[3].Trim(),
+                        ReleaseYear = int.TryParse(row[4].Trim(), out var year) ? year : 2020,
+                        AgeRating = row[5].Trim(),
+                        Language = row[6].Trim(),
+                        Country = row[7].Trim(),
+                        AverageRating = double.TryParse(row[8].Trim(), NumberStyles.Any,
+                            CultureInfo.InvariantCulture, out var rating)
+                            ? rating
+                            : 0,
+                        DurationMin = int.TryParse(row[9].Trim(), out var dur) ? dur : 90
+                    });
                     break;
+                }
                 case "Series":
-                    ProcessSeries(row, genres, contents);
+                {
+                    var genreName = row[1].Trim();
+                    var title = row[2].Trim();
+                    if (contentGenreMap.ContainsKey(title)) break;
+                    genreNames.Add(genreName);
+                    contentGenreMap[title] = genreName;
+                    contentList.Add(new Series
+                    {
+                        Title = title,
+                        Description = row[3].Trim(),
+                        ReleaseYear = int.TryParse(row[4].Trim(), out var year) ? year : 2020,
+                        AgeRating = row[5].Trim(),
+                        Language = row[6].Trim(),
+                        Country = row[7].Trim(),
+                        AverageRating = double.TryParse(row[8].Trim(), NumberStyles.Any,
+                            CultureInfo.InvariantCulture, out var rating)
+                            ? rating
+                            : 0,
+                        SeasonsCount = int.TryParse(row[9].Trim(), out var sc) ? sc : 1
+                    });
                     break;
+                }
                 case "Episode":
-                    ProcessEpisode(row, contents);
+                {
+                    var seriesTitle = row[2].Trim();
+                    episodeData.Add((seriesTitle, new Episode
+                    {
+                        Title = row[3].Trim(),
+                        SeasonNumber = int.TryParse(row[4].Trim(), out var sn) ? sn : 1,
+                        EpisodeNumber = int.TryParse(row[5].Trim(), out var en) ? en : 1,
+                        DurationMin = int.TryParse(row[9].Trim(), out var dur) ? dur : 45,
+                        Synopsis = row[10].Trim()
+                    }));
                     break;
+                }
                 case "User":
-                    ProcessUser(row, users);
+                {
+                    var email = row[11].Trim();
+                    if (!userData.ContainsKey(email))
+                        userData[email] = new User
+                        {
+                            Name = row[10].Trim(),
+                            Email = email
+                        };
                     break;
-                case "Review":
-                    ProcessReview(row, users, contents);
-                    break;
-                case "Rating":
-                    ProcessRating(row, users, contents);
-                    break;
-                case "MyList":
-                    ProcessMyList(row, users, myLists);
-                    break;
-                case "MyListItem":
-                    ProcessMyListItem(row, myLists, contents);
-                    break;
+                }
             }
         }
 
-        await _genreRepository.AddRangeAsync(genres.Values);
+        var genres = genreNames.Select(n => new Genre { Name = n }).ToList();
+        await _genreRepository.AddRangeAsync(genres);
         await _genreRepository.SaveChangesAsync();
 
-        await _contentRepository.AddRangeAsync(contents.Values);
+        var genreLookup = genres.ToDictionary(g => g.Name, g => g.Id);
+
+        foreach (var content in contentList)
+            if (contentGenreMap.TryGetValue(content.Title, out var gName) && genreLookup.TryGetValue(gName, out var gId))
+                content.GenreId = gId;
+
+        await _contentRepository.AddRangeAsync(contentList);
         await _contentRepository.SaveChangesAsync();
 
-        foreach (var content in contents.Values)
-            if (content is Series series)
+        var contentLookup = contentList.ToDictionary(c => c.Title, c => c.Id);
+
+        var episodes = new List<Episode>();
+        foreach (var (seriesTitle, episode) in episodeData)
+            if (contentLookup.TryGetValue(seriesTitle, out var seriesId))
             {
-                foreach (var episode in series.Episodes) episode.SeriesId = series.Id;
-                await _episodeRepository.AddRangeAsync(series.Episodes);
+                episode.SeriesId = seriesId;
+                episodes.Add(episode);
             }
 
+        await _episodeRepository.AddRangeAsync(episodes);
         await _episodeRepository.SaveChangesAsync();
 
-        await _userRepository.AddRangeAsync(users.Values);
+        await _userRepository.AddRangeAsync(userData.Values);
         await _userRepository.SaveChangesAsync();
 
         var reviews = new List<Review>();
@@ -114,12 +172,12 @@ public class DataImportService : IDataImportService
             {
                 var userEmail = row[11].Trim();
                 var contentTitle = row[2].Trim();
-                if (users.TryGetValue(userEmail, out var user) &&
-                    contents.TryGetValue(contentTitle, out var content))
+                if (userData.TryGetValue(userEmail, out var user) &&
+                    contentLookup.TryGetValue(contentTitle, out var contentId))
                     reviews.Add(new Review
                     {
                         UserId = user.Id,
-                        ContentId = content.Id,
+                        ContentId = contentId,
                         Text = row[12].Trim(),
                         CreatedAt = DateTime.TryParse(row[13].Trim(), out var date) ? date : DateTime.UtcNow
                     });
@@ -128,12 +186,12 @@ public class DataImportService : IDataImportService
             {
                 var userEmail = row[11].Trim();
                 var contentTitle = row[2].Trim();
-                if (users.TryGetValue(userEmail, out var user) &&
-                    contents.TryGetValue(contentTitle, out var content))
+                if (userData.TryGetValue(userEmail, out var user) &&
+                    contentLookup.TryGetValue(contentTitle, out var contentId))
                     ratings.Add(new Rating
                     {
                         UserId = user.Id,
-                        ContentId = content.Id,
+                        ContentId = contentId,
                         Score = int.TryParse(row[12].Trim(), out var score) ? score : 5,
                         CreatedAt = DateTime.TryParse(row[13].Trim(), out var date) ? date : DateTime.UtcNow
                     });
@@ -146,6 +204,7 @@ public class DataImportService : IDataImportService
         await _ratingRepository.AddRangeAsync(ratings);
         await _ratingRepository.SaveChangesAsync();
 
+        var myLists = new Dictionary<int, MyList>();
         foreach (var row in rows)
         {
             if (row.Length < 14) continue;
@@ -154,7 +213,7 @@ public class DataImportService : IDataImportService
             if (recordType == "MyList")
             {
                 var userEmail = row[11].Trim();
-                if (users.TryGetValue(userEmail, out var user) && !myLists.ContainsKey(user.Id))
+                if (userData.TryGetValue(userEmail, out var user) && !myLists.ContainsKey(user.Id))
                 {
                     var myList = new MyList
                     {
@@ -170,123 +229,18 @@ public class DataImportService : IDataImportService
             {
                 var userEmail = row[11].Trim();
                 var contentTitle = row[2].Trim();
-                if (users.TryGetValue(userEmail, out var user) &&
-                    contents.TryGetValue(contentTitle, out var content) &&
+                if (userData.TryGetValue(userEmail, out var user) &&
+                    contentLookup.TryGetValue(contentTitle, out var contentId) &&
                     myLists.TryGetValue(user.Id, out var myList))
                     await _myListRepository.AddMyListItemAsync(new MyListItem
                     {
                         MyListId = myList.Id,
-                        ContentId = content.Id,
+                        ContentId = contentId,
                         AddedAt = DateTime.TryParse(row[13].Trim(), out var date) ? date : DateTime.UtcNow
                     });
             }
         }
 
         await _myListRepository.SaveChangesAsync();
-    }
-
-    private static void ProcessGenre(string[] row, Dictionary<string, Genre> genres)
-    {
-        var name = row[1].Trim();
-        if (!genres.ContainsKey(name)) genres[name] = new Genre { Name = name };
-    }
-
-    private static void ProcessMovie(string[] row, Dictionary<string, Genre> genres,
-        Dictionary<string, Content> contents)
-    {
-        var genreName = row[1].Trim();
-        var title = row[2].Trim();
-
-        if (contents.ContainsKey(title)) return;
-        if (!genres.TryGetValue(genreName, out var genre)) return;
-
-        contents[title] = new Movie
-        {
-            Title = title,
-            Description = row[3].Trim(),
-            ReleaseYear = int.TryParse(row[4].Trim(), out var year) ? year : 2020,
-            AgeRating = row[5].Trim(),
-            Language = row[6].Trim(),
-            Country = row[7].Trim(),
-            AverageRating =
-                double.TryParse(row[8].Trim(), NumberStyles.Any, CultureInfo.InvariantCulture, out var rating)
-                    ? rating
-                    : 0,
-            Genre = genre,
-            DurationMin = int.TryParse(row[9].Trim(), out var dur) ? dur : 90
-        };
-    }
-
-    private static void ProcessSeries(string[] row, Dictionary<string, Genre> genres,
-        Dictionary<string, Content> contents)
-    {
-        var genreName = row[1].Trim();
-        var title = row[2].Trim();
-
-        if (contents.ContainsKey(title)) return;
-        if (!genres.TryGetValue(genreName, out var genre)) return;
-
-        contents[title] = new Series
-        {
-            Title = title,
-            Description = row[3].Trim(),
-            ReleaseYear = int.TryParse(row[4].Trim(), out var year) ? year : 2020,
-            AgeRating = row[5].Trim(),
-            Language = row[6].Trim(),
-            Country = row[7].Trim(),
-            AverageRating =
-                double.TryParse(row[8].Trim(), NumberStyles.Any, CultureInfo.InvariantCulture, out var rating)
-                    ? rating
-                    : 0,
-            Genre = genre,
-            SeasonsCount = int.TryParse(row[9].Trim(), out var sc) ? sc : 1
-        };
-    }
-
-    private static void ProcessEpisode(string[] row, Dictionary<string, Content> contents)
-    {
-        var seriesTitle = row[2].Trim();
-
-        if (!contents.TryGetValue(seriesTitle, out var content) || content is not Series series) return;
-
-        series.Episodes.Add(new Episode
-        {
-            Title = row[3].Trim(),
-            SeasonNumber = int.TryParse(row[4].Trim(), out var sn) ? sn : 1,
-            EpisodeNumber = int.TryParse(row[5].Trim(), out var en) ? en : 1,
-            DurationMin = int.TryParse(row[9].Trim(), out var dur) ? dur : 45,
-            Synopsis = row[10].Trim(),
-            Series = series
-        });
-    }
-
-    private static void ProcessUser(string[] row, Dictionary<string, User> users)
-    {
-        var email = row[11].Trim();
-        if (!users.ContainsKey(email))
-            users[email] = new User
-            {
-                Name = row[10].Trim(),
-                Email = email
-            };
-    }
-
-    private static void ProcessReview(string[] row, Dictionary<string, User> users,
-        Dictionary<string, Content> contents)
-    {
-    }
-
-    private static void ProcessRating(string[] row, Dictionary<string, User> users,
-        Dictionary<string, Content> contents)
-    {
-    }
-
-    private static void ProcessMyList(string[] row, Dictionary<string, User> users, Dictionary<int, MyList> myLists)
-    {
-    }
-
-    private static void ProcessMyListItem(string[] row, Dictionary<int, MyList> myLists,
-        Dictionary<string, Content> contents)
-    {
     }
 }
