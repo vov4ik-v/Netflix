@@ -5,6 +5,9 @@ using Netflix.DAL.CsvReading;
 using Netflix.DAL.Data;
 using Netflix.DAL.Interfaces;
 using Netflix.DAL.Repositories;
+using Netflix.Presentation.Interfaces;
+using Netflix.Presentation.Presenters;
+using Netflix.Presentation.UI;
 
 namespace Netflix;
 
@@ -29,6 +32,15 @@ public class Program
         builder.Services.AddScoped<ICsvDataReader, CsvDataReader>();
 
         builder.Services.AddScoped<IDataImportService, DataImportService>();
+
+        builder.Services.AddScoped<ICatalogService, CatalogService>();
+        builder.Services.AddScoped<IUserService, UserService>();
+        
+        builder.Services.AddScoped<ICatalogPresenter, CatalogPresenter>();
+        builder.Services.AddScoped<IContentPresenter, ContentPresenter>();
+        builder.Services.AddScoped<IUserPresenter, UserPresenter>();
+        
+        builder.Services.AddHostedService<ConsoleMenuService>();
 
         builder.Services.AddOpenApi();
 
