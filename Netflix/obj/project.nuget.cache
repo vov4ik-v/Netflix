@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "nzq8H45W9JA=",
+  "success": true,
+  "projectFilePath": "/Users/visionit/RiderProjects/Netflix/Netflix/Netflix.csproj",
+  "expectedPackageFiles": [
+    "/Users/visionit/.nuget/packages/microsoft.aspnetcore.openapi/10.0.5/microsoft.aspnetcore.openapi.10.0.5.nupkg.sha512",
+    "/Users/visionit/.nuget/packages/microsoft.openapi/2.0.0/microsoft.openapi.2.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}
