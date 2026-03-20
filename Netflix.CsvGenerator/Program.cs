@@ -204,7 +204,7 @@ public class Program
         for (var i = 0; i < 60; i++)
         {
             var date = DateTime.UtcNow.AddDays(-Rng.Next(1, 365)).ToString("yyyy-MM-dd");
-            sb.AppendLine($"MyList,,,,,,,,,,,,,{Escape(userEmails[i])},{date}");
+            sb.AppendLine($"MyList,,,,,,,,,,,,{Escape(userEmails[i])},,{date}");
         }
 
         for (var i = 0; i < 150; i++)

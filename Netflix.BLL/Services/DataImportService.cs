@@ -119,11 +119,11 @@ public class DataImportService : IDataImportService
                 }
                 case "User":
                 {
-                    var email = row[11].Trim();
+                    var email = row[12].Trim();
                     if (!userData.ContainsKey(email))
                         userData[email] = new User
                         {
-                            Name = row[10].Trim(),
+                            Name = row[11].Trim(),
                             Email = email
                         };
                     break;
@@ -170,7 +170,7 @@ public class DataImportService : IDataImportService
 
             if (recordType == "Review")
             {
-                var userEmail = row[11].Trim();
+                var userEmail = row[12].Trim();
                 var contentTitle = row[2].Trim();
                 if (userData.TryGetValue(userEmail, out var user) &&
                     contentLookup.TryGetValue(contentTitle, out var contentId))
@@ -178,13 +178,13 @@ public class DataImportService : IDataImportService
                     {
                         UserId = user.Id,
                         ContentId = contentId,
-                        Text = row[12].Trim(),
-                        CreatedAt = DateTime.TryParse(row[13].Trim(), out var date) ? date : DateTime.UtcNow
+                        Text = row[13].Trim(),
+                        CreatedAt = DateTime.TryParse(row[14].Trim(), out var date) ? date : DateTime.UtcNow
                     });
             }
             else if (recordType == "Rating")
             {
-                var userEmail = row[11].Trim();
+                var userEmail = row[12].Trim();
                 var contentTitle = row[2].Trim();
                 if (userData.TryGetValue(userEmail, out var user) &&
                     contentLookup.TryGetValue(contentTitle, out var contentId))
@@ -192,8 +192,8 @@ public class DataImportService : IDataImportService
                     {
                         UserId = user.Id,
                         ContentId = contentId,
-                        Score = int.TryParse(row[12].Trim(), out var score) ? score : 5,
-                        CreatedAt = DateTime.TryParse(row[13].Trim(), out var date) ? date : DateTime.UtcNow
+                        Score = int.TryParse(row[13].Trim(), out var score) ? score : 5,
+                        CreatedAt = DateTime.TryParse(row[14].Trim(), out var date) ? date : DateTime.UtcNow
                     });
             }
         }
@@ -212,13 +212,13 @@ public class DataImportService : IDataImportService
 
             if (recordType == "MyList")
             {
-                var userEmail = row[11].Trim();
+                var userEmail = row[12].Trim();
                 if (userData.TryGetValue(userEmail, out var user) && !myLists.ContainsKey(user.Id))
                 {
                     var myList = new MyList
                     {
                         UserId = user.Id,
-                        CreatedAt = DateTime.TryParse(row[13].Trim(), out var date) ? date : DateTime.UtcNow
+                        CreatedAt = DateTime.TryParse(row[14].Trim(), out var date) ? date : DateTime.UtcNow
                     };
                     await _myListRepository.AddAsync(myList);
                     await _myListRepository.SaveChangesAsync();
@@ -227,7 +227,7 @@ public class DataImportService : IDataImportService
             }
             else if (recordType == "MyListItem")
             {
-                var userEmail = row[11].Trim();
+                var userEmail = row[12].Trim();
                 var contentTitle = row[2].Trim();
                 if (userData.TryGetValue(userEmail, out var user) &&
                     contentLookup.TryGetValue(contentTitle, out var contentId) &&
@@ -236,7 +236,7 @@ public class DataImportService : IDataImportService
                     {
                         MyListId = myList.Id,
                         ContentId = contentId,
-                        AddedAt = DateTime.TryParse(row[13].Trim(), out var date) ? date : DateTime.UtcNow
+                        AddedAt = DateTime.TryParse(row[14].Trim(), out var date) ? date : DateTime.UtcNow
                     });
             }
         }
