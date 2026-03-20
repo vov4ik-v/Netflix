@@ -1,5 +1,10 @@
 using Microsoft.EntityFrameworkCore;
+using Netflix.BLL.Interfaces;
+using Netflix.BLL.Services;
+using Netflix.DAL.CsvReading;
 using Netflix.DAL.Data;
+using Netflix.DAL.Interfaces;
+using Netflix.DAL.Repositories;
 
 namespace Netflix;
 
@@ -14,38 +19,38 @@ public class Program
         builder.Services.AddDbContext<NetflixDbContext>(options =>
             options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+        builder.Services.AddScoped<IGenreRepository, GenreRepository>();
+        builder.Services.AddScoped<IContentRepository, ContentRepository>();
+        builder.Services.AddScoped<IEpisodeRepository, EpisodeRepository>();
+        builder.Services.AddScoped<IUserRepository, UserRepository>();
+        builder.Services.AddScoped<IReviewRepository, ReviewRepository>();
+        builder.Services.AddScoped<IRatingRepository, RatingRepository>();
+        builder.Services.AddScoped<IMyListRepository, MyListRepository>();
+        builder.Services.AddScoped<ICsvDataReader, CsvDataReader>();
+
+        builder.Services.AddScoped<IDataImportService, DataImportService>();
+
         builder.Services.AddOpenApi();
 
         var app = builder.Build();
 
-        // Configure the HTTP request pipeline.
         if (app.Environment.IsDevelopment())
         {
             app.MapOpenApi();
         }
 
         app.UseHttpsRedirection();
-
         app.UseAuthorization();
 
-        var summaries = new[]
+        app.MapPost("/api/import", async (HttpContext context, IDataImportService importService) =>
         {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
+            var filePath = context.Request.Query["filePath"].ToString();
+            if (string.IsNullOrEmpty(filePath))
+                return Results.BadRequest("filePath query parameter is required");
 
-        app.MapGet("/weatherforecast", (HttpContext httpContext) =>
-            {
-                var forecast = Enumerable.Range(1, 5).Select(index =>
-                        new WeatherForecast
-                        {
-                            Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-                            TemperatureC = Random.Shared.Next(-20, 55),
-                            Summary = summaries[Random.Shared.Next(summaries.Length)]
-                        })
-                    .ToArray();
-                return forecast;
-            })
-            .WithName("GetWeatherForecast");
+            await importService.ImportFromCsvAsync(filePath);
+            return Results.Ok("Import completed successfully");
+        });
 
         app.Run();
     }
