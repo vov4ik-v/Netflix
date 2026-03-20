@@ -1,0 +1,16 @@
+/Users/visionit/RiderProjects/Netflix/Netflix.DAL/bin/Debug/net9.0/Netflix.DAL.deps.json
+/Users/visionit/RiderProjects/Netflix/Netflix.DAL/bin/Debug/net9.0/Netflix.DAL.dll
+/Users/visionit/RiderProjects/Netflix/Netflix.DAL/bin/Debug/net9.0/Netflix.DAL.pdb
+/Users/visionit/RiderProjects/Netflix/Netflix.DAL/bin/Debug/net9.0/Netflix.Domain.dll
+/Users/visionit/RiderProjects/Netflix/Netflix.DAL/bin/Debug/net9.0/Netflix.Domain.pdb
+/Users/visionit/RiderProjects/Netflix/Netflix.DAL/obj/Debug/net9.0/Netflix.DAL.csproj.AssemblyReference.cache
+/Users/visionit/RiderProjects/Netflix/Netflix.DAL/obj/Debug/net9.0/Netflix.DAL.GeneratedMSBuildEditorConfig.editorconfig
+/Users/visionit/RiderProjects/Netflix/Netflix.DAL/obj/Debug/net9.0/Netflix.DAL.AssemblyInfoInputs.cache
+/Users/visionit/RiderProjects/Netflix/Netflix.DAL/obj/Debug/net9.0/Netflix.DAL.AssemblyInfo.cs
+/Users/visionit/RiderProjects/Netflix/Netflix.DAL/obj/Debug/net9.0/Netflix.DAL.csproj.CoreCompileInputs.cache
+/Users/visionit/RiderProjects/Netflix/Netflix.DAL/obj/Debug/net9.0/Netflix.DAL.sourcelink.json
+/Users/visionit/RiderProjects/Netflix/Netflix.DAL/obj/Debug/net9.0/Netflix..DD41B292.Up2Date
+/Users/visionit/RiderProjects/Netflix/Netflix.DAL/obj/Debug/net9.0/Netflix.DAL.dll
+/Users/visionit/RiderProjects/Netflix/Netflix.DAL/obj/Debug/net9.0/refint/Netflix.DAL.dll
+/Users/visionit/RiderProjects/Netflix/Netflix.DAL/obj/Debug/net9.0/Netflix.DAL.pdb
+/Users/visionit/RiderProjects/Netflix/Netflix.DAL/obj/Debug/net9.0/ref/Netflix.DAL.dll

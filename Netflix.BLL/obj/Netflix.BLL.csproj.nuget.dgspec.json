@@ -1,0 +1,202 @@
+{
+  "format": 1,
+  "restore": {
+    "/Users/visionit/RiderProjects/Netflix/Netflix.BLL/Netflix.BLL.csproj": {}
+  },
+  "projects": {
+    "/Users/visionit/RiderProjects/Netflix/Netflix.BLL/Netflix.BLL.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/visionit/RiderProjects/Netflix/Netflix.BLL/Netflix.BLL.csproj",
+        "projectName": "Netflix.BLL",
+        "projectPath": "/Users/visionit/RiderProjects/Netflix/Netflix.BLL/Netflix.BLL.csproj",
+        "packagesPath": "/Users/visionit/.nuget/packages/",
+        "outputPath": "/Users/visionit/RiderProjects/Netflix/Netflix.BLL/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/visionit/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net9.0"
+        ],
+        "sources": {
+          "/opt/homebrew/Cellar/dotnet@9/9.0.115/libexec/library-packs": {},
+          "https://api.nuget.org/v3/index.json": {},
+          "https://nuget.pkg.github.com/VisionIT-Train-Tracker/index.json": {}
+        },
+        "frameworks": {
+          "net9.0": {
+            "targetAlias": "net9.0",
+            "projectReferences": {
+              "/Users/visionit/RiderProjects/Netflix/Netflix.DAL/Netflix.DAL.csproj": {
+                "projectPath": "/Users/visionit/RiderProjects/Netflix/Netflix.DAL/Netflix.DAL.csproj"
+              },
+              "/Users/visionit/RiderProjects/Netflix/Netflix.Domain/Netflix.Domain.csproj": {
+                "projectPath": "/Users/visionit/RiderProjects/Netflix/Netflix.Domain/Netflix.Domain.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.100"
+      },
+      "frameworks": {
+        "net9.0": {
+          "targetAlias": "net9.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/opt/homebrew/Cellar/dotnet@9/9.0.115/libexec/sdk/9.0.115/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "/Users/visionit/RiderProjects/Netflix/Netflix.DAL/Netflix.DAL.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/visionit/RiderProjects/Netflix/Netflix.DAL/Netflix.DAL.csproj",
+        "projectName": "Netflix.DAL",
+        "projectPath": "/Users/visionit/RiderProjects/Netflix/Netflix.DAL/Netflix.DAL.csproj",
+        "packagesPath": "/Users/visionit/.nuget/packages/",
+        "outputPath": "/Users/visionit/RiderProjects/Netflix/Netflix.DAL/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/visionit/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net9.0"
+        ],
+        "sources": {
+          "/opt/homebrew/Cellar/dotnet@9/9.0.115/libexec/library-packs": {},
+          "https://api.nuget.org/v3/index.json": {},
+          "https://nuget.pkg.github.com/VisionIT-Train-Tracker/index.json": {}
+        },
+        "frameworks": {
+          "net9.0": {
+            "targetAlias": "net9.0",
+            "projectReferences": {
+              "/Users/visionit/RiderProjects/Netflix/Netflix.Domain/Netflix.Domain.csproj": {
+                "projectPath": "/Users/visionit/RiderProjects/Netflix/Netflix.Domain/Netflix.Domain.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.100"
+      },
+      "frameworks": {
+        "net9.0": {
+          "targetAlias": "net9.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/opt/homebrew/Cellar/dotnet@9/9.0.115/libexec/sdk/9.0.115/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "/Users/visionit/RiderProjects/Netflix/Netflix.Domain/Netflix.Domain.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/visionit/RiderProjects/Netflix/Netflix.Domain/Netflix.Domain.csproj",
+        "projectName": "Netflix.Domain",
+        "projectPath": "/Users/visionit/RiderProjects/Netflix/Netflix.Domain/Netflix.Domain.csproj",
+        "packagesPath": "/Users/visionit/.nuget/packages/",
+        "outputPath": "/Users/visionit/RiderProjects/Netflix/Netflix.Domain/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/visionit/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net9.0"
+        ],
+        "sources": {
+          "/opt/homebrew/Cellar/dotnet@9/9.0.115/libexec/library-packs": {},
+          "https://api.nuget.org/v3/index.json": {},
+          "https://nuget.pkg.github.com/VisionIT-Train-Tracker/index.json": {}
+        },
+        "frameworks": {
+          "net9.0": {
+            "targetAlias": "net9.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.100"
+      },
+      "frameworks": {
+        "net9.0": {
+          "targetAlias": "net9.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/opt/homebrew/Cellar/dotnet@9/9.0.115/libexec/sdk/9.0.115/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

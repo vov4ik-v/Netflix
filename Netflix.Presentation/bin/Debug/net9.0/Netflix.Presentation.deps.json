@@ -1,0 +1,72 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v9.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v9.0": {
+      "Netflix.Presentation/1.0.0": {
+        "dependencies": {
+          "Netflix.BLL": "1.0.0"
+        },
+        "runtime": {
+          "Netflix.Presentation.dll": {}
+        }
+      },
+      "Netflix.BLL/1.0.0": {
+        "dependencies": {
+          "Netflix.DAL": "1.0.0",
+          "Netflix.Domain": "1.0.0"
+        },
+        "runtime": {
+          "Netflix.BLL.dll": {
+            "assemblyVersion": "1.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "Netflix.DAL/1.0.0": {
+        "dependencies": {
+          "Netflix.Domain": "1.0.0"
+        },
+        "runtime": {
+          "Netflix.DAL.dll": {
+            "assemblyVersion": "1.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "Netflix.Domain/1.0.0": {
+        "runtime": {
+          "Netflix.Domain.dll": {
+            "assemblyVersion": "1.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Netflix.Presentation/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Netflix.BLL/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Netflix.DAL/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Netflix.Domain/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

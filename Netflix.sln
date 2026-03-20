@@ -1,6 +1,17 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
+# 
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netflix", "Netflix\Netflix.csproj", "{FCDA19D4-9E5F-447D-AE42-4D1D0F79A3F8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netflix.Domain", "Netflix.Domain\Netflix.Domain.csproj", "{CABCA523-EBEA-4955-BAA1-808294A59715}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netflix.DAL", "Netflix.DAL\Netflix.DAL.csproj", "{509F34DA-1B0D-4EAA-9C3A-E47E2F27231A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netflix.BLL", "Netflix.BLL\Netflix.BLL.csproj", "{4324D882-9B4D-4397-AAC9-9058E9AA4084}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netflix.Presentation", "Netflix.Presentation\Netflix.Presentation.csproj", "{51782D72-29EC-48BB-ABF5-67495DEA5DD1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netflix.CsvGenerator", "Netflix.CsvGenerator\Netflix.CsvGenerator.csproj", "{B73EAC9B-4FD5-467F-B592-711CD8BC4FD5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -12,5 +23,25 @@ Global
 		{FCDA19D4-9E5F-447D-AE42-4D1D0F79A3F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FCDA19D4-9E5F-447D-AE42-4D1D0F79A3F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FCDA19D4-9E5F-447D-AE42-4D1D0F79A3F8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CABCA523-EBEA-4955-BAA1-808294A59715}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CABCA523-EBEA-4955-BAA1-808294A59715}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CABCA523-EBEA-4955-BAA1-808294A59715}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CABCA523-EBEA-4955-BAA1-808294A59715}.Release|Any CPU.Build.0 = Release|Any CPU
+		{509F34DA-1B0D-4EAA-9C3A-E47E2F27231A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{509F34DA-1B0D-4EAA-9C3A-E47E2F27231A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{509F34DA-1B0D-4EAA-9C3A-E47E2F27231A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{509F34DA-1B0D-4EAA-9C3A-E47E2F27231A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4324D882-9B4D-4397-AAC9-9058E9AA4084}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4324D882-9B4D-4397-AAC9-9058E9AA4084}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4324D882-9B4D-4397-AAC9-9058E9AA4084}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4324D882-9B4D-4397-AAC9-9058E9AA4084}.Release|Any CPU.Build.0 = Release|Any CPU
+		{51782D72-29EC-48BB-ABF5-67495DEA5DD1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{51782D72-29EC-48BB-ABF5-67495DEA5DD1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{51782D72-29EC-48BB-ABF5-67495DEA5DD1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{51782D72-29EC-48BB-ABF5-67495DEA5DD1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B73EAC9B-4FD5-467F-B592-711CD8BC4FD5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B73EAC9B-4FD5-467F-B592-711CD8BC4FD5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B73EAC9B-4FD5-467F-B592-711CD8BC4FD5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B73EAC9B-4FD5-467F-B592-711CD8BC4FD5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
