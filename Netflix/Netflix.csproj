@@ -7,16 +7,18 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="AutoMapper" Version="16.1.1" />
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.0" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.0">
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
           <PrivateAssets>all</PrivateAssets>
         </PackageReference>
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="7.2.0" />
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Netflix.BLL\Netflix.BLL.csproj" />
-      <ProjectReference Include="..\Netflix.DAL\Netflix.DAL.csproj" />
+      <ProjectReference Include="..\Netflix.BusinessLogic\Netflix.BusinessLogic.csproj" />
+      <ProjectReference Include="..\Netflix.Data\Netflix.Data.csproj" />
       <ProjectReference Include="..\Netflix.Domain\Netflix.Domain.csproj" />
       <ProjectReference Include="..\Netflix.Presentation\Netflix.Presentation.csproj" />
     </ItemGroup>

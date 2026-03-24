@@ -1,13 +1,10 @@
 using Microsoft.EntityFrameworkCore;
-using Netflix.BLL.Interfaces;
-using Netflix.BLL.Services;
-using Netflix.DAL.CsvReading;
-using Netflix.DAL.Data;
-using Netflix.DAL.Interfaces;
-using Netflix.DAL.Repositories;
-using Netflix.Presentation.Interfaces;
-using Netflix.Presentation.Presenters;
-using Netflix.Presentation.UI;
+using Netflix.BusinessLogic.Interfaces;
+using Netflix.BusinessLogic.Services;
+using Netflix.DataAccess.CsvReading;
+using Netflix.DataAccess.Data;
+using Netflix.DataAccess.Interfaces;
+using Netflix.DataAccess.Repositories;
 
 namespace Netflix;
 
@@ -16,8 +13,6 @@ public class Program
     public static void Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
-
-        builder.Services.AddAuthorization();
 
         builder.Services.AddDbContext<NetflixDbContext>(options =>
             options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -32,37 +27,31 @@ public class Program
         builder.Services.AddScoped<ICsvDataReader, CsvDataReader>();
 
         builder.Services.AddScoped<IDataImportService, DataImportService>();
-
         builder.Services.AddScoped<ICatalogService, CatalogService>();
         builder.Services.AddScoped<IUserService, UserService>();
-        
-        builder.Services.AddScoped<ICatalogPresenter, CatalogPresenter>();
-        builder.Services.AddScoped<IContentPresenter, ContentPresenter>();
-        builder.Services.AddScoped<IUserPresenter, UserPresenter>();
-        
-        builder.Services.AddHostedService<ConsoleMenuService>();
 
-        builder.Services.AddOpenApi();
+        builder.Services.AddControllers()
+            .AddApplicationPart(typeof(Netflix.Presentation.Controllers.CatalogController).Assembly);
+
+        builder.Services.AddAutoMapper(cfg => 
+        {
+            cfg.AddProfile<Netflix.Presentation.Mapping.MappingProfile>();
+        });
+
+        builder.Services.AddEndpointsApiExplorer();
+        builder.Services.AddSwaggerGen();
 
         var app = builder.Build();
 
         if (app.Environment.IsDevelopment())
         {
-            app.MapOpenApi();
+            app.UseSwagger();
+            app.UseSwaggerUI();
         }
 
         app.UseHttpsRedirection();
         app.UseAuthorization();
-
-        app.MapPost("/api/import", async (HttpContext context, IDataImportService importService) =>
-        {
-            var filePath = context.Request.Query["filePath"].ToString();
-            if (string.IsNullOrEmpty(filePath))
-                return Results.BadRequest("filePath query parameter is required");
-
-            await importService.ImportFromCsvAsync(filePath);
-            return Results.Ok("Import completed successfully");
-        });
+        app.MapControllers();
 
         app.Run();
     }
