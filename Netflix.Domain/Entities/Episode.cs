@@ -10,5 +10,5 @@ public class Episode
     public int DurationMin { get; init; }
     public string Synopsis { get; init; } = string.Empty;
 
-    public Series Series { get; init; } = null!;
+    public Series? Series { get; init; }
 }

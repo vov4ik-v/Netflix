@@ -8,6 +8,6 @@ public class Review
     public string Text { get; init; } = string.Empty;
     public DateTime CreatedAt { get; init; }
 
-    public User User { get; init; } = null!;
-    public Content Content { get; init; } = null!;
+    public User? User { get; init; }
+    public Content? Content { get; init; }
 }

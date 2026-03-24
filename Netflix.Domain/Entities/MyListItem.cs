@@ -7,6 +7,6 @@ public class MyListItem
     public int ContentId { get; init; }
     public DateTime AddedAt { get; init; }
 
-    public MyList MyList { get; init; } = null!;
-    public Content Content { get; init; } = null!;
+    public MyList? MyList { get; init; }
+    public Content? Content { get; init; }
 }

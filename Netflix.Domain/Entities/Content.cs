@@ -12,7 +12,7 @@ public abstract class Content
     public double AverageRating { get; init; }
     public int GenreId { get; set; }
 
-    public Genre Genre { get; init; } = null!;
+    public Genre? Genre { get; init; }
     public ICollection<Review> Reviews { get; set; } = new List<Review>();
     public ICollection<Rating> Ratings { get; set; } = new List<Rating>();
 }

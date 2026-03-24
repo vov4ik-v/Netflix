@@ -6,6 +6,6 @@ public class MyList
     public int UserId { get; init; }
     public DateTime CreatedAt { get; init; }
 
-    public User User { get; init; } = null!;
+    public User? User { get; init; }
     public ICollection<MyListItem> Items { get; init; } = new List<MyListItem>();
 }
