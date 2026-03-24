@@ -1,9 +1,9 @@
-namespace Netflix.Presentation.DTOs;
+namespace Netflix.Presentation.DTO;
 
 public record MyListDto
 {
-    public int Id { get; set; }
-    public int UserId { get; set; }
-    public DateTime CreatedAt { get; set; }
-    public List<MyListItemDto> Items { get; set; } = new();
+    public int Id { get; init; }
+    public int UserId { get; init; }
+    public DateTime CreatedAt { get; init; }
+    public List<MyListItemDto> Items { get; init; } = [];
 }

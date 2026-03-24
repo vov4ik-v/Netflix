@@ -148,33 +148,38 @@ public class DataImportService(
             if (row.Length < 14) continue;
             var recordType = row[0].Trim();
 
-            if (recordType == "Review")
+            switch (recordType)
             {
-                var userEmail = row[12].Trim();
-                var contentTitle = row[2].Trim();
-                if (userData.TryGetValue(userEmail, out var user) &&
-                    contentLookup.TryGetValue(contentTitle, out var contentId))
-                    reviews.Add(new Review
-                    {
-                        UserId = user.Id,
-                        ContentId = contentId,
-                        Text = row[13].Trim(),
-                        CreatedAt = DateTime.TryParse(row[14].Trim(), out var date) ? date : DateTime.UtcNow
-                    });
-            }
-            else if (recordType == "Rating")
-            {
-                var userEmail = row[12].Trim();
-                var contentTitle = row[2].Trim();
-                if (userData.TryGetValue(userEmail, out var user) &&
-                    contentLookup.TryGetValue(contentTitle, out var contentId))
-                    ratings.Add(new Rating
-                    {
-                        UserId = user.Id,
-                        ContentId = contentId,
-                        Score = int.TryParse(row[13].Trim(), out var score) ? score : 5,
-                        CreatedAt = DateTime.TryParse(row[14].Trim(), out var date) ? date : DateTime.UtcNow
-                    });
+                case "Review":
+                {
+                    var userEmail = row[12].Trim();
+                    var contentTitle = row[2].Trim();
+                    if (userData.TryGetValue(userEmail, out var user) &&
+                        contentLookup.TryGetValue(contentTitle, out var contentId))
+                        reviews.Add(new Review
+                        {
+                            UserId = user.Id,
+                            ContentId = contentId,
+                            Text = row[13].Trim(),
+                            CreatedAt = DateTime.TryParse(row[14].Trim(), out var date) ? date : DateTime.UtcNow
+                        });
+                    break;
+                }
+                case "Rating":
+                {
+                    var userEmail = row[12].Trim();
+                    var contentTitle = row[2].Trim();
+                    if (userData.TryGetValue(userEmail, out var user) &&
+                        contentLookup.TryGetValue(contentTitle, out var contentId))
+                        ratings.Add(new Rating
+                        {
+                            UserId = user.Id,
+                            ContentId = contentId,
+                            Score = int.TryParse(row[13].Trim(), out var score) ? score : 5,
+                            CreatedAt = DateTime.TryParse(row[14].Trim(), out var date) ? date : DateTime.UtcNow
+                        });
+                    break;
+                }
             }
         }
 
@@ -190,34 +195,40 @@ public class DataImportService(
             if (row.Length < 14) continue;
             var recordType = row[0].Trim();
 
-            if (recordType == "MyList")
+            switch (recordType)
             {
-                var userEmail = row[12].Trim();
-                if (userData.TryGetValue(userEmail, out var user) && !myLists.ContainsKey(user.Id))
+                case "MyList":
                 {
-                    var myList = new MyList
+                    var userEmail = row[12].Trim();
+                    if (userData.TryGetValue(userEmail, out var user) && !myLists.ContainsKey(user.Id))
                     {
-                        UserId = user.Id,
-                        CreatedAt = DateTime.TryParse(row[14].Trim(), out var date) ? date : DateTime.UtcNow
-                    };
-                    await myListRepository.AddAsync(myList);
-                    await myListRepository.SaveChangesAsync();
-                    myLists[user.Id] = myList;
+                        var myList = new MyList
+                        {
+                            UserId = user.Id,
+                            CreatedAt = DateTime.TryParse(row[14].Trim(), out var date) ? date : DateTime.UtcNow
+                        };
+                        await myListRepository.AddAsync(myList);
+                        await myListRepository.SaveChangesAsync();
+                        myLists[user.Id] = myList;
+                    }
+
+                    break;
                 }
-            }
-            else if (recordType == "MyListItem")
-            {
-                var userEmail = row[12].Trim();
-                var contentTitle = row[2].Trim();
-                if (userData.TryGetValue(userEmail, out var user) &&
-                    contentLookup.TryGetValue(contentTitle, out var contentId) &&
-                    myLists.TryGetValue(user.Id, out var myList))
-                    await myListRepository.AddMyListItemAsync(new MyListItem
-                    {
-                        MyListId = myList.Id,
-                        ContentId = contentId,
-                        AddedAt = DateTime.TryParse(row[14].Trim(), out var date) ? date : DateTime.UtcNow
-                    });
+                case "MyListItem":
+                {
+                    var userEmail = row[12].Trim();
+                    var contentTitle = row[2].Trim();
+                    if (userData.TryGetValue(userEmail, out var user) &&
+                        contentLookup.TryGetValue(contentTitle, out var contentId) &&
+                        myLists.TryGetValue(user.Id, out var myList))
+                        await myListRepository.AddMyListItemAsync(new MyListItem
+                        {
+                            MyListId = myList.Id,
+                            ContentId = contentId,
+                            AddedAt = DateTime.TryParse(row[14].Trim(), out var date) ? date : DateTime.UtcNow
+                        });
+                    break;
+                }
             }
         }
 

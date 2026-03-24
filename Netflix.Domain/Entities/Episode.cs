@@ -2,13 +2,13 @@ namespace Netflix.Domain.Entities;
 
 public class Episode
 {
-    public int Id { get; set; }
+    public int Id { get; init; }
     public int SeriesId { get; set; }
-    public string Title { get; set; } = string.Empty;
-    public int SeasonNumber { get; set; }
-    public int EpisodeNumber { get; set; }
-    public int DurationMin { get; set; }
-    public string Synopsis { get; set; } = string.Empty;
+    public string Title { get; init; } = string.Empty;
+    public int SeasonNumber { get; init; }
+    public int EpisodeNumber { get; init; }
+    public int DurationMin { get; init; }
+    public string Synopsis { get; init; } = string.Empty;
 
-    public Series Series { get; set; } = null!;
+    public Series Series { get; init; } = null!;
 }

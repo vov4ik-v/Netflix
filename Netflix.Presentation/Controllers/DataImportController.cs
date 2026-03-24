@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Netflix.BusinessLogic.Interfaces;
-using Netflix.Presentation.DTOs;
+using Netflix.Presentation.DTO;
 
 namespace Netflix.Presentation.Controllers;
 

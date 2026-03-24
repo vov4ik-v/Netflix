@@ -25,10 +25,7 @@ public class CsvDataReader : ICsvDataReader
     {
         using var reader = new StreamReader(filePath);
         var headerLine = reader.ReadLine();
-        if (headerLine == null)
-            return Array.Empty<string>();
-
-        return ParseCsvLine(headerLine);
+        return headerLine == null ? [] : ParseCsvLine(headerLine);
     }
 
     private static string[] ParseCsvLine(string line)
@@ -59,18 +56,18 @@ public class CsvDataReader : ICsvDataReader
             }
             else
             {
-                if (line[i] == '"')
+                switch (line[i])
                 {
-                    inQuotes = true;
-                }
-                else if (line[i] == ',')
-                {
-                    fields.Add(current);
-                    current = string.Empty;
-                }
-                else
-                {
-                    current += line[i];
+                    case '"':
+                        inQuotes = true;
+                        break;
+                    case ',':
+                        fields.Add(current);
+                        current = string.Empty;
+                        break;
+                    default:
+                        current += line[i];
+                        break;
                 }
             }
 

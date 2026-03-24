@@ -2,7 +2,7 @@ namespace Netflix.Domain.Entities;
 
 public class Series : Content
 {
-    public int SeasonsCount { get; set; }
+    public int SeasonsCount { get; init; }
 
-    public ICollection<Episode> Episodes { get; set; } = new List<Episode>();
+    public ICollection<Episode> Episodes { get; init; } = new List<Episode>();
 }

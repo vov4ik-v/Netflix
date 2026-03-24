@@ -1,4 +1,4 @@
-namespace Netflix.Presentation.DTOs;
+namespace Netflix.Presentation.DTO;
 
 public record ImportResultDto
 {

@@ -1,9 +1,9 @@
-namespace Netflix.Presentation.DTOs;
+namespace Netflix.Presentation.DTO;
 
 public record RatingDto
 {
-    public int Id { get; set; }
-    public int UserId { get; set; }
-    public int Score { get; set; }
-    public DateTime CreatedAt { get; set; }
+    public int Id { get; init; }
+    public int UserId { get; init; }
+    public int Score { get; init; }
+    public DateTime CreatedAt { get; init; }
 }

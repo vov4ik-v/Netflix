@@ -1,11 +1,11 @@
-namespace Netflix.Presentation.DTOs;
+namespace Netflix.Presentation.DTO;
 
 public record EpisodeDto
 {
-    public int Id { get; set; }
-    public string Title { get; set; } = string.Empty;
-    public int SeasonNumber { get; set; }
-    public int EpisodeNumber { get; set; }
-    public int DurationMin { get; set; }
-    public string Synopsis { get; set; } = string.Empty;
+    public int Id { get; init; }
+    public string Title { get; init; } = string.Empty;
+    public int SeasonNumber { get; init; }
+    public int EpisodeNumber { get; init; }
+    public int DurationMin { get; init; }
+    public string Synopsis { get; init; } = string.Empty;
 }

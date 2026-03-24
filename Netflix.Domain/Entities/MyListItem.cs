@@ -2,11 +2,11 @@ namespace Netflix.Domain.Entities;
 
 public class MyListItem
 {
-    public int Id { get; set; }
-    public int MyListId { get; set; }
-    public int ContentId { get; set; }
-    public DateTime AddedAt { get; set; }
+    public int Id { get; init; }
+    public int MyListId { get; init; }
+    public int ContentId { get; init; }
+    public DateTime AddedAt { get; init; }
 
-    public MyList MyList { get; set; } = null!;
-    public Content Content { get; set; } = null!;
+    public MyList MyList { get; init; } = null!;
+    public Content Content { get; init; } = null!;
 }

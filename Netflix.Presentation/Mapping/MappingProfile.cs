@@ -1,6 +1,6 @@
 using AutoMapper;
 using Netflix.Domain.Entities;
-using Netflix.Presentation.DTOs;
+using Netflix.Presentation.DTO;
 
 namespace Netflix.Presentation.Mapping;
 
